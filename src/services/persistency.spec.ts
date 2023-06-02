@@ -1,15 +1,29 @@
-// tanto faz usar it ou test
-describe('TESTENDO ALGUMA COISA', () => {
-  // teste deveria retornar 1, o primeiro parâmetro é uma descrição
-  it('should return one', () => {
-    const number = 1;
-    expect(number).not.toBe(1); // espera que não seja 1
-  });
-});
+// Teste de classe Persistency
+import { Persistency } from './persistency';
 
-describe('TESTENDO OUTRA COISA', () => {
-  test('descrição do teste (TESTE)', () => {
-    const nome = 'Luiz';
-    expect(nome).toBe('Luiz'); // espera que seja 'Luiz'
+// cada it() é um mock criado
+describe('Persistency', () => {
+  afterEach(() => jest.clearAllMocks()); // limpa os mocks depois de cada um executar
+  // afterAll(() => jest.clearAllMocks()); // limpa os mocks depois de todos executarem
+
+  it('should return undefined', () => {
+    // System under test = sut
+    const sut = new Persistency(); // sut -> classe que está sendo testada
+    expect(sut.saveOrder()).toBeUndefined();
+  });
+
+  // teste precisa chamar o console.log uma vez
+  it('should call console.log once', () => {
+    const sut = new Persistency(); // sut -> classe que está sendo testada
+    const consoleSpy = jest.spyOn(console, 'log'); // variável consoleSpy vai espionar o console de método log na classe
+    sut.saveOrder();
+    expect(consoleSpy).toHaveBeenCalledTimes(1); // espera que o método console.log seja chamado só uma vez, podemos trocar isso no parâmetro
+  });
+
+  it('should call console.log with "Pedido salvo com sucesso."', () => {
+    const sut = new Persistency(); // sut -> classe que está sendo testada
+    const consoleSpy = jest.spyOn(console, 'log'); // variável consoleSpy vai espionar o console de método log na classe
+    sut.saveOrder();
+    expect(consoleSpy).toHaveBeenCalledWith('Pedido salvo com sucesso.'); // espera que o console.log retorne o que está em parênteses, ele consegue ter acesso ao que foi logado no console também
   });
 });
