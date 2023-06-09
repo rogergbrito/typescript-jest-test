@@ -7,7 +7,7 @@ const createSut = (name: string, price: number): Product => {
 };
 
 // cada it() é um mock criado
-describe('Messaging', () => {
+describe('Product', () => {
   afterEach(() => jest.clearAllMocks()); // limpa os mocks depois de cada um executar
   // afterAll(() => jest.clearAllMocks()); // limpa os mocks depois de todos executarem
 
