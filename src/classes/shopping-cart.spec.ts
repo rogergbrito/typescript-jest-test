@@ -64,4 +64,18 @@ describe('ShoppingCart', () => {
     sut.removeItem(0);
     expect(sut.isEmpty()).toBe(true);
   });
+
+  it('should call discount.calculate once when totalWithDiscount is called', () => {
+    const { sut, discountMock } = createSutWithProducts();
+    const discountMockSpy = jest.spyOn(discountMock, 'calculate'); // pega a ação se o discountMock chamou o método "canculate"
+    sut.totalWithDescont(); // chama o método totalWithDiscount que chama o método calculate
+    expect(discountMockSpy).toHaveBeenCalledTimes(1); // espera que o método calculate tenha sido chamado só uma vez
+  });
+
+  it('should call discount.calculate with total price when totalWithDiscount is called', () => {
+    const { sut, discountMock } = createSutWithProducts();
+    const discountMockSpy = jest.spyOn(discountMock, 'calculate');
+    sut.totalWithDescont();
+    expect(discountMockSpy).toHaveBeenCalledWith(sut.total()); // verifica se a função calculate foi chamado com o valor total
+  });
 });
